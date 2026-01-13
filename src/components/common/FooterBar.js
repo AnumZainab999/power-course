@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Row, Col, Space, Grid } from "antd";
 import { WhatsAppOutlined } from "@ant-design/icons";
 import linkedinImg from "../../assets/Vector.png"; // LinkedIn image
@@ -7,6 +9,7 @@ const { useBreakpoint } = Grid;
 
 const Footer = () => {
   const screens = useBreakpoint();
+const navigate = useNavigate();
 
   const footerContainerStyle = {
     width: "100%",
@@ -58,10 +61,16 @@ const Footer = () => {
         {/* Left Side: Links and Copyright */}
         <Col style={{ textAlign: screens.xs ? "center" : "left" }}>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: screens.xs ? "center" : "flex-start" }}>
-            <span style={linkStyle}>Terms of Use</span>
-            <span style={linkStyle}>Privacy</span>
-            <span style={linkStyle}>Cookie preferences</span>
-            <span style={linkStyle}>Contact Us</span>
+           <span 
+  style={linkStyle} 
+  onClick={() => navigate("/terms")}
+>
+  Terms of Use
+</span>
+
+            <span style={linkStyle} onClick={() => navigate("/privacy")}>Privacy</span>
+            <span style={linkStyle}  onClick={() => navigate("/cookie")}>Cookie preferences</span>
+            <span style={linkStyle}  onClick={() => navigate("/contact-us")}>Contact Us</span>
           </div>
           <div style={copyrightStyle}>
             Copyright © 2025 PowerCourses. All rights reserved.

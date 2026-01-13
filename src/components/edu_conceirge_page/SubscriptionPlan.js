@@ -303,7 +303,7 @@ const SubscriptionPlans = () => {
   const screens = useBreakpoint(); // Detect screen size
 
   return (
-    <div style={{ ...styles.page, padding: screens.xs ? "40px 16px" : styles.page.padding }}>
+    <div style={{ ...styles.page, padding: screens.xs ? "40px 16px" : styles.page.padding }} id="plans">
       <Title
         level={2}
         style={{

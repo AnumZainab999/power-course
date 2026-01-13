@@ -58,17 +58,23 @@ const HeaderBar = () => {
       key: "plans",
       label: "Plans",
       children: [
-        {
-          key: "edu-plans",
-          label: "Edu Concierge Plans",
-          onClick: () => navigate("/edu-concierge#plans"),
-        },
+       {
+  key: "edu-plans",
+  label: "Edu Concierge Plans",
+  onClick: () => {
+    const element = document.getElementById("plans");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  },
+},
+
         { key: "spark-plans", label: "Spark Plans" }, // Add navigation if needed
       ],
     },
-    { key: "about", label: "For Students", onClick: () => navigate("/about-us") },
-    { key: "contact", label: "For Schools" },
-    { key: "about-us", label: "About", onClick: () => navigate("/about-us") },
+     { key: "about-us", label: "About Us", onClick: () => navigate("/about-us") },
+    { key: "contact", label: "Contact Us", onClick: () => navigate("/contact-us") },
+   
   ];
 
   return (
