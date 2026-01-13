@@ -10,6 +10,7 @@ import AboutSparkPage from "./Pages/About_Spark";
 import AboutPage from "./Pages/AboutPage";
 import ContactUsPage from "./Pages/ContactUs";
 import RootLayout from "./RootLayout"; 
+import TermsOfUse from "./Pages/TermsOfUse";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "/about-spark", element: <AboutSparkPage /> },
       { path: "/about-us", element: <AboutPage /> },
       { path: "/contact-us", element: <ContactUsPage /> },
+      { path: "/terms", element: <TermsOfUse /> },
     ],
   },
 ]);

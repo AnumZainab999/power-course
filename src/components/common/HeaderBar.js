@@ -116,18 +116,18 @@ const HeaderBar = () => {
         {/* Desktop Buttons */}
         <Col xs={0} lg={6} style={{ textAlign: "right" }}>
           {user ? (
-            <Button type="primary" onClick={handleLogout}>
+            <Button type="primary" >
               Logout
             </Button>
           ) : (
             <>
               <Button
                 style={{ backgroundColor: "#D3D3D3", marginRight: 10 }}
-                onClick={() => navigate("/google-signup")}
+               
               >
                 Sign Up
               </Button>
-              <Button type="primary" onClick={() => navigate("/google-login")}>
+              <Button type="primary" >
                 Login
               </Button>
             </>
@@ -165,7 +165,7 @@ const HeaderBar = () => {
         />
         <div style={{ marginTop: 24, padding: "0 16px" }}>
           {user ? (
-            <Button block type="primary" onClick={handleLogout}>
+            <Button block type="primary">
               Logout
             </Button>
           ) : (
@@ -173,20 +173,14 @@ const HeaderBar = () => {
               <Button
                 block
                 type="primary"
-                onClick={() => {
-                  navigate("/google-login");
-                  setOpen(false);
-                }}
+               
               >
                 Login
               </Button>
               <Button
                 block
                 style={{ marginTop: 10 }}
-                onClick={() => {
-                  navigate("/google-signup");
-                  setOpen(false);
-                }}
+              
               >
                 Sign Up
               </Button>

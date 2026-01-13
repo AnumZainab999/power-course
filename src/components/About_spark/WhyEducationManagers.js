@@ -182,7 +182,6 @@ const WhyEducationManagers = () => {
               </Paragraph>
             </Col>
           </Row>
-
 <Card
   style={{
     background: "#FFD6D6",
