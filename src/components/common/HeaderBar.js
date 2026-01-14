@@ -122,18 +122,18 @@ const HeaderBar = () => {
         {/* Desktop Buttons */}
         <Col xs={0} lg={6} style={{ textAlign: "right" }}>
           {user ? (
-            <Button type="primary" >
+            <Button type="primary" onClick={() => navigate("/login")} >
               Logout
             </Button>
           ) : (
             <>
               <Button
                 style={{ backgroundColor: "#D3D3D3", marginRight: 10 }}
-               
+               onClick={() => navigate("/signup")}
               >
                 Sign Up
               </Button>
-              <Button type="primary" >
+              <Button type="primary" onClick={() => navigate("/login")}>
                 Login
               </Button>
             </>

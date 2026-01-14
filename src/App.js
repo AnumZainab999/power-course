@@ -2,7 +2,13 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "antd/dist/reset.css";
 import "./App.css";
-
+import SignupPage from "./Pages/SignUp_Page";
+import LoginPage from "./Pages/LoginPage";
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
+import SignupCodePage from "./Pages/SignupCodePage";
+import GoogleLogin from "./Pages/GoogleLogin";
+import GoogleSignup from "./Pages/GoogleSignup";
+import ForgetPasswordPage from "./Pages/ForgetPasswordPage";
 import LandingPage from "./Pages/LandingPage";
 import Home from "./Pages/Edu_Conceirge";
 import AboutEduPage from "./Pages/About_Edu";
@@ -28,6 +34,33 @@ const router = createBrowserRouter([
       { path: "/terms", element: <TermsOfUse /> },
       { path: "/cookie", element: <CookiePolicy /> },
          { path: "/privacy", element: <PrivacyPolicy /> },
+         {
+    path: "/signup",
+    element: <SignupPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/google-login",
+    element: <GoogleLogin />,
+  },
+  {
+    path: "/google-signup",
+    element: <GoogleSignup />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPasswordPage />,
+  },{
+    path: "/signup-code",
+    element: <SignupCodePage />,
+  },
     ],
   },
 ]);
