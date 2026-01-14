@@ -23,7 +23,7 @@ const LandingPage = () => {
     <Layout style={{ background: "#fff" }}>
       <HeaderBar />
 
-      <Content style={{ marginTop: 0 }}>
+      <Content >
         <HeroSection />
 
         <div data-aos="fade-up">

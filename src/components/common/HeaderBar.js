@@ -169,7 +169,7 @@ const HeaderBar = () => {
           onClick={() => setOpen(false)}
           style={{ borderRight: 0 }}
         />
-        <div style={{ marginTop: 24, padding: "0 16px" }}>
+        <div style={{ marginTop: 24, }}>
           {user ? (
             <Button block type="primary">
               Logout
