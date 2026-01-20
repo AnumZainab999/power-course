@@ -149,95 +149,104 @@ const FAQSection = () => {
         </Col>
 
         {/* RIGHT SIDE */}
-        <Col xs={24} md={16}>
-          {/* Cards */}
-          <Row
-            gutter={[screens.xs ? 16 : 0, screens.xs ? 16 : 20]}
-            style={{ marginBottom: screens.xs ? 20 : 40 }}
-            justify={screens.xs ? "center" : "start"} // center cards on mobile
-          >
-            <Col
-              xs={10} // two cards side by side on mobile
-              sm={5}
-              style={{ display: "flex", justifyContent: "center", marginBottom: screens.xs ? 10 : 0 }}
-            >
-              <Card
-                style={{
-                  ...styles.activeCard,
-                  height: screens.xs ? 100 : 130,
-                  width: screens.xs ? 120 : 150,
-                }}
-              >
-                <img
-                  src={icon1}
-                  alt="Resources"
-                  style={{
-                    ...styles.iconImg,
-                    width: screens.xs ? 50 : 62,
-                    height: screens.xs ? 50 : 62,
-                    marginBottom: screens.xs ? 6 : 10,
-                  }}
-                />
-                <Paragraph
-                  style={{
-                    ...styles.cardText,
-                    fontSize: screens.xs ? 14 : 16,
-                  }}
-                >
-                  Resources
-                </Paragraph>
-              </Card>
-            </Col>
+       {/* Added paddingLeft to this main Col to push everything right */}
+<Col xs={24} md={16} style={{ paddingLeft: screens.xs ? '20px' : '50px' }}>
+  
+  {/* Cards Row */}
+  <Row
+    gutter={[screens.xs ? 16 : 0, screens.xs ? 16 : 20]}
+    style={{ marginBottom: screens.xs ? 20 : 40 }}
+    justify={screens.xs ? "center" : "start"} 
+  >
+    <Col
+      xs={10} 
+      sm={5}
+      style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        marginBottom: screens.xs ? 10 : 0 
+      }}
+    >
+      <Card
+        style={{
+          ...styles.activeCard,
+          height: screens.xs ? 100 : 130,
+          width: screens.xs ? 120 : 150,
+        }}
+      >
+        <img
+          src={icon1}
+          alt="Resources"
+          style={{
+            ...styles.iconImg,
+            width: screens.xs ? 50 : 62,
+            height: screens.xs ? 50 : 62,
+            marginBottom: screens.xs ? 6 : 10,
+          }}
+        />
+        <Paragraph
+          style={{
+            ...styles.cardText,
+            fontSize: screens.xs ? 14 : 16,
+          }}
+        >
+          Resources
+        </Paragraph>
+      </Card>
+    </Col>
 
-            <Col
-              xs={10}
-              sm={5}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <Card
-                style={{
-                  ...styles.card,
-                  height: screens.xs ? 100 : 130,
-                  width: screens.xs ? 120 : 150,
-                  marginLeft: screens.xs ? 10 : 20,
-                }}
-              >
-                <img
-                  src={icon2}
-                  alt="Ask AI"
-                  width={screens.xs ? 70 : 85}
-                  height={screens.xs ? 70 : 85}
-                  style={{ objectFit: "contain", marginBottom: screens.xs ? 6 : 10 }}
-                />
-                <Paragraph
-                  style={{
-                    fontSize: screens.xs ? 14 : 16,
-                    fontWeight: 600,
-                    marginBottom: 0,
-                  }}
-                >
-                  Ask Ai
-                </Paragraph>
-              </Card>
-            </Col>
-          </Row>
+    <Col
+      xs={10}
+      sm={5}
+      style={{ display: "flex", justifyContent: "center" }}
+    >
+      <Card
+        style={{
+          ...styles.card,
+          height: screens.xs ? 100 : 130,
+          width: screens.xs ? 120 : 150,
+          marginLeft: screens.xs ? 10 : 20, // Space between cards
+        }}
+      >
+        <img
+          src={icon2}
+          alt="Ask AI"
+          width={screens.xs ? 70 : 85}
+          height={screens.xs ? 70 : 80}
+          style={{ objectFit: "contain", marginBottom: screens.xs ? 6 : 10 }}
+        />
+        <Paragraph
+          style={{
+            fontSize: screens.xs ? 14 : 16,
+            fontWeight: 600,
+            marginBottom: 0,
+          }}
+        >
+          Ask Ai
+        </Paragraph>
+      </Card>
+    </Col>
+  </Row>
 
-          {/* Content */}
-          <Title level={4} style={{ fontSize: screens.xs ? 18 : undefined }}>
-            How can I cancel my subscription?
-          </Title>
-          <Paragraph
-            style={{
-              color: "black",
-              maxWidth: screens.xs ? "100%" : 600,
-              fontSize: screens.xs ? 14 : undefined,
-            }}
-          >
-            We offer full fee-waivers for families experiencing financial
-            difficulty.<br /> Write to us in confidence — your child’s learning support
-            will be fully<br /> covered, and your privacy will be protected.
-          </Paragraph>
-        </Col>
+  {/* Content Section */}
+  <div style={{ paddingLeft: screens.xs ? 0 : '10px' }}> {/* Optional extra nudge for text */}
+    <Title level={4} style={{ fontSize: screens.xs ? 18 : undefined }}>
+      How can I cancel my subscription?
+    </Title>
+    <Paragraph
+      style={{
+        color: "black",
+        maxWidth: screens.xs ? "100%" : 500,
+        fontSize: screens.xs ? 16 : 15, // Adjusted for better readability
+        lineHeight: "1.6"
+      }}
+    >
+      We offer full fee-waivers for families experiencing financial
+      difficulty. Write to us in confidence — your child’s learning support
+      will be fully covered, and your privacy will be protected.
+    </Paragraph>
+  </div>
+</Col>
       </Row>
     </div>
   );

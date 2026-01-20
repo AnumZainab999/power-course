@@ -205,7 +205,7 @@ const cardData = [
         </div>
       </>
     ),
-    color: "#E6E0FF",
+    color: "#F0EBFF",
   },
   {
     title: <>Curriculum-Linked<br/> Academic Support</>,
@@ -222,7 +222,7 @@ const cardData = [
         </div>
       </>
     ),
-    color: "#DFF7EB",
+    color: "#C2F5E2",
   },
   {
     title: <>Progress Monitoring & <br/> Study Support</>,
@@ -239,7 +239,7 @@ const cardData = [
         </div>
       </>
     ),
-    color: "#D6EEFF",
+    color: "#B1DEFB",
   },
   {
     title: "Exam Preparation Support",
@@ -270,7 +270,7 @@ const cardData = [
         </div>
       </>
     ),
-    color: "#DFF7EB",
+    color: "#C2F5E2",
   },
   {
     title: "Value Add-Ons",
@@ -284,7 +284,7 @@ const cardData = [
         </div>
       </>
     ),
-    color: "#D6EEFF",
+    color: "#B1DEFB",
   },
 ];
 
@@ -349,7 +349,7 @@ const UnboxingEduConcierge = () => {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    height: screens.xs ? "auto" : "160px",
+                    height: screens.xs ? "auto" : "130px",
                     paddingLeft: screens.xs ? "16px" : "30px",
                     textAlign: "left",
                     whiteSpace: "normal",
@@ -364,7 +364,7 @@ const UnboxingEduConcierge = () => {
               }
               headStyle={{
                 backgroundColor: card.color,
-                height: screens.xs ? "auto" : "160px",
+                height: screens.xs ? "auto" : "130px",
                 padding: screens.xs ? "16px" : 0,
                 borderBottom: "none",
                 display: "block",

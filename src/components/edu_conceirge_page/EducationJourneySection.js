@@ -31,7 +31,7 @@ const EducationJourneySection = () => {
               width: "100%",
               borderRadius: 16,
               objectFit: "cover",
-              height: screens.xs ? "auto" : 570, // mobile auto height
+              height: screens.xs ? "auto" : 550, // mobile auto height
             }}
           />
         </Col>
@@ -47,7 +47,7 @@ const EducationJourneySection = () => {
                 fontFamily: "'Days One', sans-serif",
               }}
             >
-              Education is a journey
+              Education is a Journey
             </Title>
 
             <Paragraph
@@ -61,7 +61,7 @@ const EducationJourneySection = () => {
               Parents are busy, and children are growing up in a world full of
               distraction. Schools educate, tutors teach lessons, apps provide
               tools — somewhere in between, many students still struggle to stay
-              on track, not because they lack talent or they aren’t trying, but
+              on track, not because they lack talent or they aren’t trying but
               because no one is truly walking the journey with them.
             </Paragraph>
 
@@ -139,10 +139,10 @@ const EducationJourneySection = () => {
           }}
         >
           Edu Concierge is a first-of-its-kind learning support system that works like an academic autopilot — monitoring
-          <br /> progress, identifying gaps, guiding decisions, and supporting students throughout their learning journey.
+          <br /> progress, identifying gaps, guiding decisions and supporting students throughout their learning journey.
           <br />
           Our experienced Education Managers take a proactive role in planning and oversight. They help students stay
-          <br /> organized, make smarter academic choices, and significantly reduce learning complexity, stress, and spending.
+          <br /> organized, make smarter academic choices and significantly reduce learning complexity, stress and spending.
         </Paragraph>
 
         <Row

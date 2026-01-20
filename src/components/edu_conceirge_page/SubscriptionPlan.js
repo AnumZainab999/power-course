@@ -318,7 +318,7 @@ const SubscriptionPlans = () => {
       </Title>
 
       <Text style={{ ...styles.subText, fontSize: screens.xs ? 12 : styles.subText.fontSize }}>
-        Simple, transparent pricing — one subscription. No hidden fees. No platform switching.
+      Simple, transparent pricing — one subscription.  No hidden fees. No platform switching.<br/> Try it first with our no-obligation free trial (no credit card needed).
       </Text>
 
       <div style={{ ...styles.toggleWrap, marginTop: screens.xs ? 16 : styles.toggleWrap.marginTop }}>

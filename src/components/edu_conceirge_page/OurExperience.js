@@ -8,8 +8,9 @@ const OurExperience = () => {
     <div
       style={{
         backgroundColor: "#7CEFBF",
-        padding: "80px 24px",
+        padding: "70px 24px",
         textAlign: "center",
+        marginTop:"70px"
       }}
     >
       {/* Title */}
@@ -37,7 +38,7 @@ const OurExperience = () => {
       >
         In what we do, experience alone isn’t enough. Our team, from six
         countries with over 200 years of combined<br/> expertise, pairs deep
-        knowledge with a modern approach, unwavering commitment, and a robust
+        knowledge with a modern approach, unwavering commitment and a robust
         quality assurance process to provide the highest standard of support.
         We’re here to make a real difference in every student’s learning<br/>
         journey.

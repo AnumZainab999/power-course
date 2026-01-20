@@ -1,0 +1,51 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.chatbot-right-wrapper {
+  position: fixed;
+  bottom: -60px;
+  right: 20px;
+  width: 420px;
+  height: 650px;
+  z-index: 9999;
+  animation: slideUpChat 0.35s ease-out;
+}
+.faq-chat-container {
+  width: 380px;
+  height: 520px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Slide animation */
+@keyframes slideUpChat {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile = full screen */
+@media (max-width: 768px) {
+  .chatbot-right-wrapper {
+    width: 100vw;
+    height: 100vh;
+    bottom: 0;
+    right: 0;
+  }
+  .faq-chat-container {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+
+}

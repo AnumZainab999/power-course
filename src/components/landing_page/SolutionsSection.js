@@ -311,7 +311,7 @@ const SolutionsSection = () => {
                   width: arrowButtonSize,
                   height: arrowButtonSize,
                   borderRadius: "50%",
-                  backgroundColor: "#E9EAE6",
+                  backgroundColor: "#D2D3CD",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

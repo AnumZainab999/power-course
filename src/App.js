@@ -19,6 +19,8 @@ import RootLayout from "./RootLayout";
 import TermsOfUse from "./Pages/TermsOfUse";
 import CookiePolicy from "./Pages/CookiePolicy";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import HelpPage from "./Pages/HelpPage";
+import GetInvolved from "./Pages/GetInvolved";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +35,8 @@ const router = createBrowserRouter([
       { path: "/contact-us", element: <ContactUsPage /> },
       { path: "/terms", element: <TermsOfUse /> },
       { path: "/cookie", element: <CookiePolicy /> },
-         { path: "/privacy", element: <PrivacyPolicy /> },
+         { path: "/help", element: <HelpPage /> },
+         { path: "/involve", element: <GetInvolved/> },
          {
     path: "/signup",
     element: <SignupPage />,

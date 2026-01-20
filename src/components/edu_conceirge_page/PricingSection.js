@@ -85,7 +85,7 @@ const PricingSection = () => {
     activeTab === "weekly" ? weeklyPlans : activeTab === "annually" ? annualPlans : [];
 
   return (
-    <div className="pricing-container" id="plans-edu">
+    <div className="pricing-container"  id="plans">
       <Title level={2} className="plans-title">
         Plans
       </Title>
@@ -109,37 +109,57 @@ const PricingSection = () => {
     
 
       {/* --- Pricing Cards --- */}
-      <Row gutter={[24, 24]} justify="center" className="plans-row">
-        {renderPlans.map((plan, index) => (
-          <Col xs={24} sm={12} md={8} key={index}>
-            <Card className="plan-card" bordered={false}>
-              <Title level={4} className="plan-title">
-                {plan.title}
-              </Title>
-              <Title level={2} className="plan-price">
-                {plan.price}
-              </Title>
-              <Paragraph className="plan-period">{plan.period}</Paragraph>
-              <Paragraph className="plan-desc">
-                One simple subscription, no juggling multiple platforms or hidden costs. From foundational skills to advanced career pathways.
-              </Paragraph>
+   <Row
+  gutter={[24, 24]}
+  justify="center"
+  align="stretch"
+  className="plans-row"
+>
+  {renderPlans.map((plan, index) => (
+    <Col
+      xs={24}
+      sm={12}
+      md={8}
+      key={index}
+      style={{ display: "flex" }}   // 🔑 important
+    >
+      <Card
+        className="plan-card"
+        bordered={false}
+        style={{ width: "100%", height: "100%" }} // 🔑 equal height
+      >
+        <Title level={4} className="plan-title">
+          {plan.title}
+        </Title>
 
-              <div className="plan-btns">
-                <Button type="primary" className="buy-btn">
-                  Buy Now
-                </Button>
-                <Button className="learn-btn">Learn More</Button>
-              </div>
+        <Title level={2} className="plan-price">
+          {plan.price}
+        </Title>
 
-              <ul className="feature-list">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx}>{feature}</li>
-                ))}
-              </ul>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+        <Paragraph className="plan-period">{plan.period}</Paragraph>
+
+        <Paragraph className="plan-desc">
+          One simple subscription, no juggling multiple platforms or hidden costs.
+          From foundational skills to advanced career pathways.
+        </Paragraph>
+
+        <div className="plan-btns">
+          <Button type="primary" className="buy-btn">
+            Buy Now
+          </Button>
+          <Button className="learn-btn">Learn More</Button>
+        </div>
+
+        <ul className="feature-list">
+          {plan.features.map((feature, idx) => (
+            <li key={idx}>{feature}</li>
+          ))}
+        </ul>
+      </Card>
+    </Col>
+  ))}
+</Row>
+ 
     </div>
   );
 };

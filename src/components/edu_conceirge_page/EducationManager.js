@@ -11,9 +11,9 @@ const EducationManager = () => {
     navigate("/about-spark");
   };
   return (
-    <div style={{ padding: "20px 24px", backgroundColor: "white" }}>
+    <div style={{ padding: "0 24px", backgroundColor: "white" }}>
       {/* Top Title - Centered */}
-      <div style={{ textAlign: "center", marginBottom: 56 }}>
+      <div style={{ textAlign: "center", marginBottom: 65 }}>
         <Title
           level={2}
           style={{
@@ -52,7 +52,7 @@ const EducationManager = () => {
       >
         For the first time, parents and students have a<br/> dedicated education
         expert on their side — <br/>someone who understands their goals, guides<br/>
-        their decisions, and supports them throughout<br/> their learning
+        their decisions and supports them throughout<br/> their learning
         journey.
       </Paragraph>
 
@@ -61,16 +61,17 @@ const EducationManager = () => {
         style={{
           backgroundColor: "#fff",
           color: "#1B1A1A",
-          border: "1.5px solid #1B1A1A",
+          border: "1px solid #1B1A1A",
           borderRadius: 999,
           minWidth: 140,
           height: 44,
-          fontWeight: 500,
+          fontWeight: 400,
+          fontSize:"18px"
           
         }}
         onClick={handleClick} 
       >
-        Read more
+        Read More
       </Button>
     </div>
   </Col>
@@ -86,7 +87,7 @@ const EducationManager = () => {
       src={manager}
       alt="Education Manager"
       style={{
-        width: "100%",
+        width: "96%",
         objectFit: "cover",
         borderRadius: 16,
       }}

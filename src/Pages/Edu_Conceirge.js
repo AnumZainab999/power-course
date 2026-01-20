@@ -30,12 +30,13 @@ const Edu_Conceirge = () => {
   }, []);
 
   // Smooth scroll for plans section
-  useEffect(() => {
-    if (location.hash === "#plans-edu") {
-      const section = document.getElementById("plans-edu");
-      if (section) section.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [location]);
+useEffect(() => {
+  if (location.state?.scrollToPlans) {
+    const section = document.getElementById("plans");
+    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}, [location.state]);
+
 
   return (
     <>
@@ -72,7 +73,7 @@ const Edu_Conceirge = () => {
 
       <EducationManager />
       <OurExperience/>
-         <SubscriptionPlans/>
+        <PricingSection/>
           <TopBanner/>
           <FAQSection/>
         
