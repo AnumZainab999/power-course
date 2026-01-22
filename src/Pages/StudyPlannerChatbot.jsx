@@ -27,6 +27,10 @@ import {
 } from '@ant-design/icons';
 import Confetti from 'react-confetti';
 
+// Firebase imports
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase'; // Adjust the path to your firebase config
+
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
 
@@ -37,8 +41,10 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [showChat, setShowChat] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  
   const questions = [
     {
       id: 1,
@@ -169,6 +175,57 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
     }
   }, [currentStep, showChat]);
 
+  // Function to save data to Firebase
+  const saveToFirebase = async (responses) => {
+    try {
+      setSubmitting(true);
+      
+      // Create application data object
+      const applicationData = {
+        ...responses,
+        timestamp: serverTimestamp(),
+        completedAt: new Date().toISOString(),
+        status: 'pending', // You can add status for tracking
+        applicationType: 'study_plan',
+        // Add additional metadata
+        metadata: {
+          ip: await getClientIP(), // Optional: Get client IP
+          userAgent: navigator.userAgent,
+          screenResolution: `${window.screen.width}x${window.screen.height}`,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          language: navigator.language
+        }
+      };
+
+      // Reference to the collection
+      const applicationsRef = collection(db, "EduConfigApplications");
+      
+      // Add document to Firestore
+      const docRef = await addDoc(applicationsRef, applicationData);
+      
+      console.log("Application saved with ID: ", docRef.id);
+      return docRef.id;
+      
+    } catch (error) {
+      console.error("Error saving application to Firebase: ", error);
+      throw error;
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Optional: Function to get client IP (using a free service)
+  const getClientIP = async () => {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error getting IP: ", error);
+      return 'unknown';
+    }
+  };
+
   const handleResponse = () => {
     if (!currentInput.trim()) return;
 
@@ -185,10 +242,12 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
     }
 
     // Save response
-    setUserResponses(prev => ({
-      ...prev,
+    const updatedResponses = {
+      ...userResponses,
       [currentQuestion.field]: currentInput
-    }));
+    };
+    
+    setUserResponses(updatedResponses);
 
     // Clear input
     setCurrentInput('');
@@ -199,7 +258,19 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
       if (currentStep + 1 < questions.length) {
         setCurrentStep(prev => prev + 1);
       } else {
-        setShowSummary(true);
+        // Save to Firebase before showing summary
+        saveToFirebase(updatedResponses)
+          .then(() => {
+            setShowSummary(true);
+          })
+          .catch((error) => {
+            Modal.error({
+              title: 'Save Error',
+              content: 'There was an error saving your application. Please try again.',
+              okText: 'OK'
+            });
+            console.error("Failed to save to Firebase: ", error);
+          });
       }
       setLoading(false);
     }, 500);
@@ -224,6 +295,39 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
     setUserResponses({});
     setCurrentInput('');
     setShowSummary(false);
+  };
+
+  // Function to handle final submission
+  const handleFinalSubmit = async () => {
+    try {
+      setSubmitting(true);
+      
+      // Save to Firebase (though it's already saved, this ensures final save)
+      await saveToFirebase(userResponses);
+      
+      Modal.success({
+        title: 'Study Plan Generated!',
+        content: 'Your personalized AI study plan will be emailed to you within 24 hours.',
+        okText: 'Got it!',
+        onOk: () => {
+          setShowChat(false);
+          setCurrentStep(0);
+          setUserResponses({});
+          setCurrentInput('');
+          setShowSummary(false);
+          navigate("/");
+        }
+      });
+      
+    } catch (error) {
+      Modal.error({
+        title: 'Submission Error',
+        content: 'There was an error submitting your application. Please try again.',
+        okText: 'Try Again'
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const renderCurrentQuestion = () => {
@@ -327,7 +431,6 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
   };
 
   const renderSummary = () => {
-  
     return (
       <div className="summary-screen">
         {showSummary && (
@@ -356,7 +459,7 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
               Here's a summary of your responses:
             </Text>
             <Alert
-              message="Review your information below"
+              message="Your responses have been saved securely"
               type="info"
               showIcon
               icon={<InfoCircleOutlined />}
@@ -403,21 +506,9 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
                 type="primary"
                 size="large"
                 icon={<CheckCircleOutlined />}
-                onClick={() => {
-                  Modal.success({
-                    title: 'Study Plan Generated!',
-                    content: 'Your personalized AI study plan will be emailed to you within 24 hours.',
-                    okText: 'Got it!',
-                    onOk: () => {
-                      setShowChat(false);
-                      setCurrentStep(0);
-                      setUserResponses({});
-                      setCurrentInput('');
-                      setShowSummary(false);
-                         navigate("/");
-                    }
-                  });
-                }}
+                onClick={handleFinalSubmit}
+                loading={submitting}
+                disabled={submitting}
                 style={{
                   width: '100%',
                   height: '48px',
@@ -427,13 +518,14 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
                   borderRadius: '24px'
                 }}
               >
-                Generate My AI Study Plan
+                {submitting ? 'Saving...' : 'Generate My AI Study Plan'}
               </Button>
               
               <Button
                 size="large"
                 icon={<ReloadOutlined />}
                 onClick={handleRestart}
+                disabled={submitting}
                 style={{
                   width: '100%',
                   height: '48px',
@@ -477,45 +569,6 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
     );
   };
 
-  // if (!showChat) {
-  //   return (
-  //     <div className="chat-launcher">
-  //       <div className="launcher-content">
-  //         <Avatar 
-  //           size={80}
-  //           icon={<RobotOutlined />}
-  //           style={{ 
-  //             backgroundColor: '#1890ff',
-  //             marginBottom: 24
-  //           }}
-  //         />
-  //         <Title level={3} style={{ color: '#1890ff', marginBottom: 12 }}>
-  //           AI Study Planner Assistant
-  //         </Title>
-  //         <Paragraph style={{ color: '#666', textAlign: 'center', marginBottom: 32, maxWidth: 400 }}>
-  //           Answer a few quick questions and get your personalized AI study plan in minutes
-  //         </Paragraph>
-  //         <Button
-  //           type="primary"
-  //           size="large"
-  //           icon={<MessageOutlined />}
-  //           onClick={() => setShowChat(true)}
-  //           style={{
-  //             padding: '0 40px',
-  //             height: '48px',
-  //             fontSize: '16px',
-  //             backgroundColor: '#1890ff',
-  //             border: 'none',
-  //             borderRadius: '24px'
-  //           }}
-  //         >
-  //           Start Conversation
-  //         </Button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   if (showSummary) {
     return renderSummary();
   }
@@ -551,25 +604,24 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
           </div>
         </div>
         
-   <Button
-  type="text"
-  icon={<CloseOutlined />}
-  onClick={() => {
-    Modal.confirm({
-      title: 'Exit Chat?',
-      content: 'Your progress will be saved. You can continue later.',
-      okText: 'Exit',
-      cancelText: 'Stay',
-      onOk: () => {
-        if (typeof onClose === "function") {
-          onClose(); // parent se close
-        }
-      },
-    });
-  }}
-  style={{ color: '#666' }}
-/>
-
+        <Button
+          type="text"
+          icon={<CloseOutlined />}
+          onClick={() => {
+            Modal.confirm({
+              title: 'Exit Chat?',
+              content: 'Your progress will be saved. You can continue later.',
+              okText: 'Exit',
+              cancelText: 'Stay',
+              onOk: () => {
+                if (typeof onClose === "function") {
+                  onClose(); // parent se close
+                }
+              },
+            });
+          }}
+          style={{ color: '#666' }}
+        />
       </div>
 
       {/* Progress Info */}
@@ -599,25 +651,6 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
           flex-direction: column;
           height: 90vh;
           position: relative;
-        }
-
-        .chat-launcher {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 100%;
-          background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
-          padding: 20px;
-        }
-
-        .launcher-content {
-          text-align: center;
-          background: white;
-          padding: 40px;
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(0, 102, 204, 0.15);
-          max-width: 500px;
-          width: 100%;
         }
 
         .chat-header {
@@ -714,11 +747,6 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
           text-align: center;
         }
 
-        .answers-count-info {
-          margin-top: auto;
-          animation: fadeIn 0.3s ease;
-        }
-
         .summary-screen {
           min-height: 100%;
           display: flex;
@@ -807,8 +835,7 @@ const FAQStyleStudyChatbot = ({ onClose }) => {
             max-width: 100%;
           }
           
-          .summary-content,
-          .launcher-content {
+          .summary-content {
             padding: 20px;
           }
           

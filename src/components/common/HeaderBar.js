@@ -3,13 +3,13 @@ import { Layout, Menu, Drawer, Button, Row, Col, message } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
-
+// Removed unnecessary Grid import since we are fixing layout logic
 const { Header } = Layout;
 
 const HeaderBar = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [openKeys, setOpenKeys] = useState([]); // Track submenu keys for mobile drawer
+  const [openKeys, setOpenKeys] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,9 +57,8 @@ const HeaderBar = () => {
     { key: "contact", label: "Contact Us", onClick: () => navigate("/contact-us") },
   ];
 
-  // Mobile drawer open submenu handler
   const onOpenChange = (keys) => {
-    setOpenKeys(keys); // Only one submenu open at a time
+    setOpenKeys(keys);
   };
 
   return (
@@ -68,6 +67,7 @@ const HeaderBar = () => {
         background: location.pathname === "/" ? "#F9FAFABF" : "#fff",
         color: "#000",
         padding: "0 40px",
+        height: "70px",
         position: location.pathname === "/" ? "fixed" : "sticky",
         top: 0,
         width: "100%",
@@ -75,8 +75,15 @@ const HeaderBar = () => {
         boxShadow: location.pathname === "/" ? "none" : "0 1px 4px rgba(0,0,0,0.1)",
       }}
     >
-      <Row align="middle" justify="space-between">
-        <Col>
+      {/* LAYOUT FIX: 
+         We use spans that add up to 24 for Desktop (lg).
+         Logo (6) + Menu (12) + Buttons (6) = 24.
+         This ensures the Menu is physically in the center of the screen.
+      */}
+      <Row align="middle" justify="space-between" style={{ height: "100%" }}>
+        
+        {/* LOGO COL - Span 6 */}
+        <Col xs={12} lg={6} style={{ display: 'flex', alignItems: 'center' }}>
           <img
             src={logo}
             alt="Logo"
@@ -85,7 +92,7 @@ const HeaderBar = () => {
           />
         </Col>
 
-        {/* Desktop Menu */}
+        {/* DESKTOP MENU - Span 12 (CENTERED) */}
         <Col xs={0} lg={12}>
           <Menu
             mode="horizontal"
@@ -94,26 +101,29 @@ const HeaderBar = () => {
             items={menuItems}
             style={{
               borderBottom: "none",
+              fontSize: 20,
               background: "transparent",
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "center", // This centers the items within the column
+              width: "100%",            // Ensure menu takes full width of the column
+              minWidth: 0,              // Prevents flex overflow issues
             }}
           />
         </Col>
 
-        {/* Desktop Buttons */}
+        {/* DESKTOP BUTTONS - Span 6 (Align Right) */}
         <Col xs={0} lg={6} style={{ textAlign: "right" }}>
           {user ? (
             <Button type="primary" onClick={handleLogout}>Logout</Button>
           ) : (
             <>
               <Button style={{ marginRight: 10 }} onClick={() => navigate("/signup")}>Sign Up</Button>
-              <Button onClick={() => navigate("/login")}>Login</Button>
+              <Button type="primary" onClick={() => navigate("/login")}>Login</Button>
             </>
           )}
         </Col>
 
-        {/* Mobile Hamburger */}
+        {/* MOBILE HAMBURGER - Visible only on small screens */}
         <Col xs={12} lg={0} style={{ textAlign: "right" }}>
           <Button type="text" icon={<MenuOutlined style={{ fontSize: 22 }} />} onClick={() => setOpen(true)} />
         </Col>
@@ -129,7 +139,7 @@ const HeaderBar = () => {
           items={menuItems}
           style={{ borderRight: 0 }}
         />
-        <div style={{ marginTop: 24 }}>
+        <div style={{ marginTop: 24, padding: "0 20px" }}>
           {user ? (
             <Button block type="primary" onClick={handleLogout}>Logout</Button>
           ) : (
